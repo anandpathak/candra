@@ -1,0 +1,26 @@
+{
+    "AppName": "aws-ssh",
+    "ConfigVersion": "0.1",
+    "BuildSettings": {
+      "LdFlags": "-s",
+      "LdFlagsXVars": {
+        "Version": "main.VERSION"
+      }
+    },
+    "Tasks": [
+      "interpolate-source",
+      "default"
+    ],
+    "TasksExclude": [
+      "archive",
+      "codesign",
+      "copy-resources",
+      "deb",
+      "deb-dev",
+      "downloads-page",
+      "go-vet",
+      "go-test",
+      "go-install",
+      "rmbin"
+    ]
+  }
