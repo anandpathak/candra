@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	utils "github.com/anandpathak/aws-ssh/utils"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -34,11 +35,10 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	initConfig()
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "a", "", "config file (default is $HOME/.aws-ssh.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "configPath", "", "config file (default is $HOME/.aws-ssh.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -51,15 +51,13 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
+		fmt.Println("this is here ...")
 		// Find home directory.
 		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
+		utils.Check(err)
 		// Search config in home directory with name ".aws-ssh" (without extension).
 		viper.AddConfigPath(home)
+		viper.SetConfigType("json")
 		viper.SetConfigName(".aws-ssh")
 	}
 
@@ -68,5 +66,10 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	} else {
+		fmt.Println("couldn't find config file, you should run config ", err)
+		err := setConfig()
+		utils.Check(err)
+
 	}
 }
