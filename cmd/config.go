@@ -87,6 +87,12 @@ func setConfig() error {
 			DefaultValue: viper.GetString("region"),
 			AnswerType:   "string",
 		},
+		utils.Query{
+			Name:         "keyFileLocation",
+			Question:     "where is the pemFiles stored ? ",
+			DefaultValue: viper.GetString("keyFileLocation"),
+			AnswerType:   "string",
+		},
 	}
 
 	// check if the user provided input is valid
