@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	utils "github.com/anandpathak/aws-ssh/utils"
+	utils "github.com/anandpathak/candra/utils"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -14,11 +14,11 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "aws-ssh",
+	Use:   "candra",
 	Short: "SSH to AWS servers made easy",
 	Long: `Too many AWS server, hard to remember ssh command? 
 
-aws-ssh will help you! simplied way to ssh to aws servers`,
+candra will help you! simplied way to ssh to aws servers`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
@@ -38,7 +38,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "configPath", "", "config file (default is $HOME/.aws-ssh.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "configPath", "", "config file (default is $HOME/.candra.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -55,10 +55,10 @@ func initConfig() {
 		// Find home directory.
 		home, err := homedir.Dir()
 		utils.Check(err)
-		// Search config in home directory with name ".aws-ssh" (without extension).
+		// Search config in home directory with name ".candra" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigType("json")
-		viper.SetConfigName(".aws-ssh")
+		viper.SetConfigName(".candra")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

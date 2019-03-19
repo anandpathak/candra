@@ -1,6 +1,6 @@
 VERSION=0.0.1
 PATH_BUILD=build/
-FILE_COMMAND=aws-ssh
+FILE_COMMAND=candra
 FILE_ARCH=darwin_amd64
 
 clean:

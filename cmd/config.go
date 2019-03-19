@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	utils "github.com/anandpathak/aws-ssh/utils"
+	utils "github.com/anandpathak/candra/utils"
 	homedir "github.com/mitchellh/go-homedir"
 
 	"github.com/spf13/cobra"
@@ -18,8 +18,8 @@ var configCmd = &cobra.Command{
 	Short: "use add or list to add config or view config",
 	Long: `Dude ! you need to pass add or view. something like
 
-aws-ssh config add
-aws-ssh config view
+candra config add
+candra config view
 
 	`,
 }
@@ -114,6 +114,6 @@ func setConfig() error {
 	}
 	home, err := homedir.Dir()
 	utils.Check(err)
-	err2 := viper.WriteConfigAs(home + "/.aws-ssh.json")
+	err2 := viper.WriteConfigAs(home + "/.candra.json")
 	return err2
 }

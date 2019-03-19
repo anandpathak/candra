@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/anandpathak/aws-ssh/utils"
+	"github.com/anandpathak/candra/utils"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/spf13/viper"
