@@ -17,7 +17,7 @@ A CLI tool to simplify the process of ssh into ec2 instances.
   -  `make build && make install`
   - use the binary generated in build and enjoy!
 
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
+
 
 ## Comamands
  - get the list of available command
