@@ -5,11 +5,11 @@ import (
 	"strconv"
 )
 
-// user define validation function to be passed in struct for user input validation
-type validate func(string) error
+// Validation defines validation function to be passed in struct for user input validation
+type Validation func(string) error
 
-// user defeind filter function to process the user defined input
-type filter func(string) (error, string)
+// Filter defines function for running filter on the data
+type Filter func(string) (error, string)
 
 // Query struct type to handle user input and Question
 type Query struct {
@@ -21,14 +21,17 @@ type Query struct {
 }
 
 // Validate Handle user input validation
-func (q Query) Validate(fn validate) error {
+func (q Query) Validate(fn Validation) error {
 	return fn(q.Answer)
 }
 
 // Filter hanlde filteration on user data
-func (q *Query) Filter(fn filter) error {
+func (q *Query) Filter(fn Filter) error {
 	err, Answer := fn(q.Answer)
-	q.Answer = Answer
+	if err == nil {
+		q.Answer = Answer
+		return nil
+	}
 	return err
 }
 
@@ -54,4 +57,5 @@ func (q *Query) Prompt() {
 	var response string
 	fmt.Scanln(&response)
 	q.Answer = response
+
 }

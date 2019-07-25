@@ -86,7 +86,7 @@ func Login(pemKey string, user string, server string, port string) {
 
 	// Request pseudo terminal
 	if err := session.RequestPty("xterm", 80, 40, modes); err != nil {
-	//if err := session.RequestPty("xterm-256color", 80, 40, modes); err != nil {
+		//if err := session.RequestPty("xterm-256color", 80, 40, modes); err != nil {
 		//if err := session.RequestPty("vt100", 80, 40, modes); err != nil {
 		//if err := session.RequestPty("vt220", 80, 40, modes); err != nil {
 		log.Fatalf("request for pseudo terminal failed: %s", err)

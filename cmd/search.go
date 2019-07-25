@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/anandpathak/candra/utils"
@@ -44,12 +45,35 @@ to quickly create a Cobra application.`,
 		i := query.InType().(int)
 		fmt.Println(servers[i])
 		var keyname = viper.GetString("keyFileLocation") + "/" + servers[i].PemKey + ".pem"
-		//utils.Login(keyname, "ubuntu", servers[i].PublicIP, "22")
-		utils.Commando(keyname, servers[i].PublicIP, "ubuntu")
+		username := takeInput(servers[i].Name)
+		viper.Set(servers[i].Name, username)
+		viper.WriteConfig()
+		utils.Commando(keyname, servers[i].PublicIP, username)
 
 	},
 }
 
+func takeInput(name string) string {
+	var username = utils.Query{
+		Name:         "userName",
+		Question:     "which user you want to login with? ",
+		DefaultValue: viper.GetString(name),
+		AnswerType:   "string",
+	}
+	username.Prompt()
+	inputError := username.Filter(func(answer string) (error, string) {
+		if len(answer) > 0 {
+			return nil, answer
+		} else if len(viper.GetString(name)) > 0 {
+			return nil, viper.GetString(name)
+		}
+		return errors.New("No userName provided"), ""
+	})
+	if inputError != nil {
+		return takeInput(name)
+	}
+	return username.Answer
+}
 func init() {
 	rootCmd.AddCommand(searchCmd)
 
